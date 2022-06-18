@@ -6,7 +6,7 @@
 
 A small game.
 
-My friend LJH gave me the idea of making the game.
+My friend [LJH](https://github.com/aso-ljh) gave me the idea of making the game.
 
 The latest version is 2.4.16. It can run on Android, Windows 10 and Windows 11 without Internet.
 
