@@ -49,6 +49,7 @@
         <div>
             <h2>使用说明 <button type="button" onclick="document.getElementById('help').hidden = !document.getElementById('help').hidden">显示/隐藏</button></h2>
             <p>此页面的所有功能均由浏览器实现，不依赖于特定的服务器，作者不会收集任何数据</p>
+            <p>此页面不一定能实现所有功能，这取决于浏览器</p>
             <p>您可以下载此页面并将其部署到其他位置使用</p>
             <p>借助此页面访问其他网站和使用浏览器直接访问其他网站理论上没有区别，您需要自行判断目标网站的安全性</p>
             <div id="help" hidden>
@@ -98,7 +99,7 @@
             </div>
         </div>
         <div>
-            <p>预览</p>
+            <h2>预览</h2>
             <iframe id="prev" title="预览" style="width:100%;"></iframe>
             <script>
                 document.getElementById('prev').style.height = '' +(window.innerHeight-25) + 'px';
