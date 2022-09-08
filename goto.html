@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>转到指定的URL</title>
+        <script>
+            function goto()
+            {
+                location.assign(getUrl());
+            }
+
+            function preview()
+            {
+                document.getElementById("prev").src = getUrl();
+            }
+
+            function getUrl()
+            {
+                gotoUrl = document.getElementById("url").value;
+                if(gotoUrl.indexOf("://")==-1){
+                    select = document.getElementById("p");
+                    gotoUrl = select.options[select.selectedIndex].value + gotoUrl;
+                }
+                return gotoUrl;
+            }
+        </script>
+        <style>
+            kbd {font-size: x-large;}
+        </style>
+    </head>
+    <body onresize="document.getElementById('prev').style.height = '' +(window.innerHeight-25) + 'px';">
+        <h1>转到指定的URL</h1>
+        <div>
+            <input id="url" type="text" title="url" placeholder="输入或粘贴URL" style="height:fit-content; font-size:16px;">
+            <button type="button" onclick="goto();">前往</button>
+            <button type="button" onclick="preview();">预览</button>
+        </div>
+        <br>
+        <div>
+            <span>自动补全协议:</span>
+            <select id="p" title="选择协议" style="height:fit-content; font-size:16px;">
+                <option value="http://">http</option>
+                <option value="https://" selected>https</option>
+                <option value="ftp://">ftp</option>
+                <option value="file://">file</option>
+            </select>
+        </div>
+        <div>
+            <h2>使用说明 <button type="button" onclick="document.getElementById('help').hidden = !document.getElementById('help').hidden">显示/隐藏</button></h2>
+            <p>此页面的所有功能均由浏览器实现，不依赖于特定的服务器，作者不会收集任何数据</p>
+            <p>您可以下载此页面并将其部署到其他位置使用</p>
+            <p>借助此页面访问其他网站和使用浏览器直接访问其他网站理论上没有区别，您需要自行判断目标网站的安全性</p>
+            <div id="help" hidden>
+                <h3>在应用内浏览器中打开此页面</h3>
+                <p>有的应用程序内自带浏览器，但是只能通过应用内链接或者扫码打开</p>
+                <p>此页面可以让此类浏览器打开任意页面</p>
+                <p>以小而美的绿色软件为例:</p>
+                <ol>
+                    <li>将此页面的地址发给<del>你的朋友</del>文件传输助手</li>
+                    <li>或者使用此页面的URL生成二维码然后扫码</li>
+                </ol>
+
+                <h3>跳转到网页</h3>
+                <p>本页面可以用于在没有地址栏的浏览器内实现跳转到指定的网页</p>
+                <p>可以手动输入URL或者复制粘贴</p>
+                <p>然后点击"前往"</p>
+                <p>复制方式:</p>
+                <ol>
+                    <li>选择链接文本然后右键点击，然后选择复制（也可以直接 <kbd>Ctrl</kbd>+<kbd>C</kbd> ）</li>
+                    <li>右键点击链接，然后选择复制链接地址</li>
+                    <li>可以在正常浏览器的顶部地址栏找到URL，然后用第1条的方法复制</li>
+                </ol>
+                <p>粘贴方式:</p>
+                <ol>
+                    <li>右键点击输入框，然后选择粘贴</li>
+                    <li>点击输入框，然后 <kbd>Ctrl</kbd>+<kbd>V</kbd></li>
+                    <li>在移动设备上可以使用输入法中的剪贴板</li>
+                    <li>在Windows10/11上可以按 <kbd>⊞</kbd>+<kbd>V</kbd> 打开剪贴板历史记录</li>
+                </ol>
+                <p>在移动设备上可以尝试用长按代替右键点击</p>
+
+                <h3>自动补全协议</h3>
+                <p>当输入的URL开头没有协议时，程序会根据选择的协议自动在URL前添加协议然后再跳转</p>
+                <h4>如何选择协议</h4>
+                <p>一般的网页优先选择https</p>
+                <p>如果目标网站不支持https，请选择http</p>
+                <p>访问FTP服务器请选择ftp</p>
+                <p>访问本地文件请选择file</p>
+
+                <h3>访问本地文件</h3>
+                <p>可以在文件资源管理器或文件属性中复制文件路径，粘贴，协议选择file</p>
+
+                <h3>下载此页面</h3>
+                <p>右键点击此页面，选择另存为（也可以直接 <kbd>Ctrl</kbd>+<kbd>S</kbd> ）</p>
+                
+            </div>
+        </div>
+        <div>
+            <p>预览</p>
+            <iframe id="prev" title="预览" style="width:100%;"></iframe>
+            <script>
+                document.getElementById('prev').style.height = '' +(window.innerHeight-25) + 'px';
+            </script>
+        </div>
+    </body>
+</html>
