@@ -32,7 +32,7 @@
     <body onresize="document.getElementById('prev').style.height = '' +(window.innerHeight-25) + 'px';">
         <h1>转到指定的URL</h1>
         <div>
-            <input id="url" type="text" title="url" placeholder="输入或粘贴URL" style="height:fit-content; font-size:16px;">
+            <input id="url" type="text" title="url" placeholder="输入或粘贴URL" style="height:20px; font-size:16px;">
             <button type="button" onclick="goto();">前往</button>
             <button type="button" onclick="preview();">预览</button>
         </div>
@@ -87,6 +87,7 @@
                 <p>如果目标网站不支持https，请选择http</p>
                 <p>访问FTP服务器请选择ftp</p>
                 <p>访问本地文件请选择file</p>
+                <p>有的浏览器不支持某些协议</p>
 
                 <h3>访问本地文件</h3>
                 <p>可以在文件资源管理器或文件属性中复制文件路径，粘贴，协议选择file</p>
