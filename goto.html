@@ -16,12 +16,10 @@
 
         function getUrl() {
             gotoUrl = document.getElementById("url").value;
-            if (gotoUrl.indexOf("://") == -1 ||
-                (
-                    !gotoUrl.startsWith("http://") &&
-                    !gotoUrl.startsWith("https://") &&
-                    !gotoUrl.startsWith("ftp://") &&
-                    !gotoUrl.startsWith("file://"))) {
+            if (!gotoUrl.startsWith("http://") &&
+                !gotoUrl.startsWith("https://") &&
+                !gotoUrl.startsWith("ftp://") &&
+                !gotoUrl.startsWith("file://")) {
                 select = document.getElementById("p");
                 gotoUrl = select.options[select.selectedIndex].value + gotoUrl;
             }
@@ -102,7 +100,9 @@
             <p>在移动设备上可以尝试用长按代替右键点击</p>
 
             <h3>自动补全协议</h3>
-            <p>当输入的URL开头没有协议时，程序会根据选择的协议自动在URL前添加协议然后再跳转</p>
+            <p>当输入的URL开头没有受支持的协议时，程序会根据选择的协议自动在URL前添加协议然后再跳转</p>
+            <p>目前支持的协议有: http, https, ftp, file</p>
+            <p>如果输入的URL的协议不被包括在以上几种之中，请选择禁用自动补全协议</p>
             <h4>如何选择协议</h4>
             <p>一般的网页优先选择https</p>
             <p>如果目标网站不支持https，请选择http</p>
