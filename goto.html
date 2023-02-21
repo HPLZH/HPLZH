@@ -17,7 +17,7 @@
         function getUrl() {
             gotoUrl = document.getElementById("url").value;
             if (gotoUrl.indexOf("://") == -1 ||
-                (SupportStartsWith &&
+                (
                     !gotoUrl.startsWith("http://") &&
                     !gotoUrl.startsWith("https://") &&
                     !gotoUrl.startsWith("ftp://") &&
@@ -30,10 +30,12 @@
 
         try {
             "".startsWith("");
-            SupportStartsWith = true;
         }
         catch (e) {
-            SupportStartsWith = false;
+            String.prototype.startsWith = function (str) {
+                var reg = new RegExp("^" + str);
+                return reg.test(this);
+            }
         }
 
     </script>
