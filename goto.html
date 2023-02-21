@@ -17,7 +17,8 @@
         function getUrl() {
             gotoUrl = document.getElementById("url").value;
             if (gotoUrl.indexOf("://") == -1 ||
-                (!gotoUrl.startsWith("http://") &&
+                (SupportStartsWith &&
+                    !gotoUrl.startsWith("http://") &&
                     !gotoUrl.startsWith("https://") &&
                     !gotoUrl.startsWith("ftp://") &&
                     !gotoUrl.startsWith("file://"))) {
@@ -26,6 +27,15 @@
             }
             return gotoUrl;
         }
+
+        try {
+            "".startsWith("");
+            SupportStartsWith = true;
+        }
+        catch (e) {
+            SupportStartsWith = false;
+        }
+
     </script>
     <style>
         kbd {
