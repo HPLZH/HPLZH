@@ -28,8 +28,11 @@
 
         var socket;
         var colck;
+        var reconnect;
+        var starting;
 
         function wsInit() {
+            starting = true;
             try {
                 clearInterval(clock);
             } catch { }
@@ -39,6 +42,13 @@
             socket = new WebSocket(host);
             socket.onopen = function (event) {
                 document.getElementById('rec').style.backgroundColor = 'green';
+                starting = false;
+                try {
+                    clearInterval(reconnect);
+                } catch { }
+                clock = setInterval(() => {
+                    socket.send('');
+                }, 1000 * 10);
             }
             socket.onmessage = function (event) {
                 data = event.data;
@@ -47,11 +57,16 @@
             };
             socket.onclose = function (event) {
                 document.getElementById('rec').style.backgroundColor = 'red';
+                if (starting) return;
+                try {
+                    clearInterval(clock);
+                } catch { }
+                wsInit();
+                reconnect = setInterval(() => {
+                    if (socket.readyState == WebSocket.CLOSED) wsInit();
+                }, 1000);
             };
             socket.onerror = socket.onclose;
-            clock = setInterval(() => {
-                socket.send('');
-            }, 1000 * 10);
         }
 
         function send(msg) {
@@ -67,7 +82,7 @@
             document.getElementById('main').style.height = window.innerHeight -
                 document.getElementById('head').style.height -
                 document.getElementById('foot').style.height -
-                200 + 'px';
+                220 + 'px';
             document.getElementById('input').style.width = window.innerWidth -
                 document.getElementById('send').style.width -
                 document.getElementById('rec').style.width -
