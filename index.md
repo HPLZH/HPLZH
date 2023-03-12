@@ -4,6 +4,8 @@
 
 [转到指定的URL](/goto.html)
 
+[网页聊天](/chat.html) (WebSocket)
+
 ## 开源项目
 
 [前往GitHub](https://github.com/HPLZH/)

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        var params = new URLSearchParams(location.search)
+        if (params.has('host')) {
+            var host = params.get('host')
+        }
+        else {
+            var host = prompt('请填写聊天服务器', 'ws://localhost/');
+            location.search = 'host=' + host
+        }
+        var hP = new URL(host).protocol;
+        var lP = location.protocol;
+        var cur = new URL(location);
+        if (lP == 'http:' && hP == 'wss:') {
+            cur.protocol = 'https:';
+            location.assign(cur);
+        }
+        if (lP == 'https:' && hP == 'ws:') {
+            cur.protocol = 'http:';
+            location.assign(cur);
+        }
+
+        var socket;
+        var colck;
+
+        function wsInit() {
+            try {
+                clearInterval(clock);
+            } catch { }
+            try {
+                socket.close();
+            } catch { }
+            socket = new WebSocket(host);
+            socket.onopen = function (event) {
+                document.getElementById('rec').style.backgroundColor = 'green';
+            }
+            socket.onmessage = function (event) {
+                data = event.data;
+                document.getElementById('main').innerHTML += `<p>[${new Date().toTimeString().split(' ')[0]}] ${data}</p>\n`;
+                document.getElementById('main').scrollTo({ top: document.getElementById('main').scrollHeight });
+            };
+            socket.onclose = function (event) {
+                document.getElementById('rec').style.backgroundColor = 'red';
+            };
+            socket.onerror = socket.onclose;
+            clock = setInterval(() => {
+                socket.send('');
+            }, 1000 * 10);
+        }
+
+        function send(msg) {
+            socket.send(msg);
+        }
+
+        function sendMsg() {
+            send(document.getElementById('input').value);
+            document.getElementById('input').value = '';
+        }
+
+        function resize() {
+            document.getElementById('main').style.height = window.innerHeight -
+                document.getElementById('head').style.height -
+                document.getElementById('foot').style.height -
+                180 + 'px';
+            document.getElementById('input').style.width = window.innerWidth -
+                document.getElementById('send').style.width -
+                document.getElementById('rec').style.width -
+                150 + 'px';
+        }
+    </script>
+</head>
+
+<body onresize="resize();">
+    <div id="head">
+        <h1>网页聊天</h1>
+        <p>注意: 本网页仅提供GUI和WebSocket客户端功能, 聊天服务器由用户指定</p>
+    </div>
+    <div id="main" style="width: 100%; overflow-y: auto; height: 0px; ">
+
+    </div>
+    <div id="foot">
+        <input type="text" id="input" width="0px" onchange="sendMsg();" style="font-size: large;" />
+        <button id="send" onclick="sendMsg();">发送</button>
+        <button id="rec" onclick="wsInit();">重连</button>
+    </div>
+    <script>
+        resize();
+        wsInit();
+    </script>
+</body>
+
+</html>
