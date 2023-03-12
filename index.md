@@ -26,12 +26,12 @@
   包括
   - Windows 10
   - Windows 11
-- 浏览器 (部分功能)
+- 浏览器 (部分功能)  
   已通过兼容性检验
   - Mozilla Firefox
-  - Microsoft Edge
+  - Microsoft Edge  
   预计能够运行
   - Google Chrome
-  - Apple Safari
+  - Apple Safari  
   不保证可靠性
   - Internet Explorer
