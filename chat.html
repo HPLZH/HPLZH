@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
     <script>
         var params = new URLSearchParams(location.search)
         if (params.has('host')) {
@@ -66,7 +67,7 @@
             document.getElementById('main').style.height = window.innerHeight -
                 document.getElementById('head').style.height -
                 document.getElementById('foot').style.height -
-                180 + 'px';
+                200 + 'px';
             document.getElementById('input').style.width = window.innerWidth -
                 document.getElementById('send').style.width -
                 document.getElementById('rec').style.width -
@@ -78,7 +79,8 @@
 <body onresize="resize();">
     <div id="head">
         <h1>网页聊天</h1>
-        <p>注意: 本网页仅提供GUI和WebSocket客户端功能, 聊天服务器由用户指定</p>
+        <p>注意: 本网页仅提供GUI和WebSocket客户端功能，聊天服务器由用户指定</p>
+        <p>提示: 此网页可以独立使用，按 Ctrl+S 可保存此网页</p>
     </div>
     <div id="main" style="width: 100%; overflow-y: auto; height: 0px; ">
 
