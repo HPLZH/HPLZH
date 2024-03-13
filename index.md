@@ -1,4 +1,4 @@
-# Li Zihan's website
+# 404 Not Found
 
 ## 实用工具
 
@@ -6,7 +6,7 @@
 
 [网页聊天](/chat.html) (WebSocket)
 
-## 开源项目
+## 项目
 
 [前往GitHub](https://github.com/HPLZH/)
 
@@ -14,9 +14,13 @@
 
 一个简单又困难的游戏
 
-语言: C# + XAML
+语言: C#
+
+UI语言: XAML
 
 许可证: MIT
+
+下面的内容很久没更新了，不要完全相信
 
 支持的平台:
 
