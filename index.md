@@ -41,3 +41,13 @@ UI语言: XAML
   - Apple Safari  
   不保证可靠性
   - Internet Explorer
+
+### [Y86-64 模拟器](https://github.com/HPLZH/Y86-64-Simulator/)
+
+语言: C++
+
+许可证: GPL v3 or later
+
+### [数学小工具](https://github.com/HPLZH/MathTools/)
+
+基于sympy的符号运算工具集, 主要功能是微积分与解方程
