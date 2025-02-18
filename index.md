@@ -1,4 +1,4 @@
-# hplzh.cn
+# HPLZH
 
 GitHub: [@HPLZH](https://github.com/HPLZH/)
 
@@ -19,6 +19,12 @@ GitHub: [@HPLZH](https://github.com/HPLZH/)
 **.NET 9**
 
 新一代闹钟, 正在开发中
+
+### 网站迁移
+
+*遥遥无期*
+
+这个网站将会迁移到 Netlify, 此页面的内容或许会迁移至 README
 
 ## 项目
 
