@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+    <style>
+        body {
+            --window-height: 0px;
+            --margin-top: 0px;
+            --margin-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: calc(var(--window-height) - var(--margin-top) - var(--margin-bottom));
+        }
+
+        main {
+            flex: 1 1 auto;
+            display: contents;
+        }
+
+        #main {
+            width: 100%;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            font-size: large;
+            line-height: 1.8em;
+            font-family: Consolas, 'Microsoft Yahei', monospace;
+        }
+
+        #foot {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        #input {
+            flex: 1 1 auto;
+            font-size: large;
+        }
+    </style>
+    <script>
+        var params = new URLSearchParams(location.search)
+        if (params.has('host')) {
+            var host = params.get('host')
+        }
+        else {
+            var host = prompt('服务器URL', 'ws://localhost/');
+            location.search = 'host=' + host
+        }
+        var hP = new URL(host).protocol;
+        var lP = location.protocol;
+        var cur = new URL(location);
+        if (lP == 'http:' && hP == 'wss:') {
+            cur.protocol = 'https:';
+            location.assign(cur);
+        }
+        if (lP == 'https:' && hP == 'ws:') {
+            cur.protocol = 'http:';
+            location.assign(cur);
+        }
+
+        var socket;
+        var colck;
+        var reconnect;
+        var starting;
+
+        function wsInit() {
+            starting = true;
+            try {
+                clearInterval(clock);
+            } catch { }
+            try {
+                socket.close();
+            } catch { }
+            socket = new WebSocket(host);
+            socket.onopen = function (event) {
+                document.getElementById('rec').style.backgroundColor = 'green';
+                starting = false;
+                try {
+                    clearInterval(reconnect);
+                } catch { }
+                clock = setInterval(() => {
+                    socket.send('');
+                }, 1000 * 10);
+            }
+            socket.onmessage = function (event) {
+                data = event.data;
+                document.getElementById('main').innerText += data;
+                resize();
+                document.getElementById('main').scrollTo({ top: document.getElementById('main').scrollHeight });
+            };
+            socket.onclose = function (event) {
+                document.getElementById('rec').style.backgroundColor = 'red';
+                if (starting) return;
+                try {
+                    clearInterval(clock);
+                } catch { }
+                wsInit();
+                reconnect = setInterval(() => {
+                    if (socket.readyState == WebSocket.CLOSED) wsInit();
+                }, 1000);
+            };
+            socket.onerror = socket.onclose;
+        }
+
+        function send(msg) {
+            socket.send(msg);
+        }
+
+        function sendMsg() {
+            send(document.getElementById('input').value);
+            document.getElementById('input').value = '';
+            resize();
+        }
+
+        function cls() {
+            document.getElementById('main').innerText = "";
+            resize();
+        }
+
+        function resize() {
+            document.body.style.setProperty("--window-height", window.innerHeight + "px");
+            document.body.style.setProperty("--margin-top", window.getComputedStyle(document.body).marginTop);
+            document.body.style.setProperty("--margin-bottom", window.getComputedStyle(document.body).marginBottom);
+        }
+    </script>
+</head>
+
+<body onresize="resize();">
+    <header id="head">
+        <h1>WebSocket Client</h1>
+    </header>
+    <main>
+        <div id="main">
+
+        </div>
+    </main>
+    <footer>
+        <div id="foot">
+            <button type="button" id="cls" onclick="cls();">清屏</button>
+            <input type="text" id="input" width="0px" onchange="sendMsg();" placeholder="输入消息内容..." />
+            <button type="button" id="send" onclick="sendMsg();">发送</button>
+            <button type="button" id="rec" onclick="wsInit();">重连</button>
+        </div>
+    </footer>
+    <script>
+        resize();
+        wsInit();
+    </script>
+</body>
+
+</html>
